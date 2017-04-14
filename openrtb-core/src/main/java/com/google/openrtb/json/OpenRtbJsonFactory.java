@@ -19,6 +19,7 @@ package com.google.openrtb.json;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.LinkedHashMultimap;
@@ -80,7 +81,13 @@ public class OpenRtbJsonFactory {
     this.extReaders = ImmutableSetMultimap.copyOf(config.extReaders);
     this.extWriters = ImmutableMap.copyOf(Maps.transformValues(config.extWriters,
         (Map<String, Map<String, OpenRtbJsonExtWriter<?>>> map) ->
-            ImmutableMap.copyOf(Maps.transformValues(map, map2 -> ImmutableMap.copyOf(map2)))));
+            ImmutableMap.copyOf(Maps.transformValues(map, new Function<Map<String, OpenRtbJsonExtWriter<?>>, ImmutableMap<String, OpenRtbJsonExtWriter<?>>>() {
+              @Nullable
+              @Override
+              public ImmutableMap<String, OpenRtbJsonExtWriter<?>> apply(@Nullable Map<String, OpenRtbJsonExtWriter<?>> map2) {
+                return ImmutableMap.copyOf(map2);
+              }
+            }))));
   }
 
   /**
