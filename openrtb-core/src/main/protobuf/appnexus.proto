@@ -69,3 +69,9 @@ message AppnexusAllowedPaymentType {
     optional int32 payment_type = 1;
     optional double conversion_rate = 2;
 }
+
+message AppNexusGeoExt {
+    extend com.google.openrtb.Geo {
+        optional string timezone = 100;
+    }
+}
