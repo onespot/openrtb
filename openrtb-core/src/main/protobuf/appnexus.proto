@@ -6,6 +6,7 @@ import "openrtb.proto";
 message AppnexusBidRequest {
     optional int32 seller_member_id = 1;
     optional bool spend_protection = 2;
+    optional AppnexusPublisherIntegration publisher_integration = 3;
 }
 
 message AppnexusBidRequestExt {
@@ -18,6 +19,7 @@ message AppnexusImp {
     optional int32 member_ad_profile_id = 1;
     optional double estimated_clear_price = 2;
     optional double predicted_view_rate_over_total = 3;
+    optional AppnexusAllowedPaymentType allowed_payment_types = 4;
 }
 
 message AppnexusImpExt {
@@ -54,4 +56,16 @@ message AppnexusBidExt {
     extend com.google.openrtb.BidResponse.SeatBid.Bid {
         optional AppnexusBid appnexus = 100;
     }
+}
+
+message AppnexusPublisherIntegration {
+    optional bool is_header = 1;
+    optional double bid_shading_high = 2;
+    optional double bid_shading_medium = 3;
+    optional double bid_shading_low = 4;
+}
+
+message AppnexusAllowedPaymentType {
+    optional int32 payment_type = 1;
+    optional double conversion_rate = 2;
 }
